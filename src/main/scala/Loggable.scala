@@ -1,0 +1,5 @@
+package antwar
+
+trait Loggable {
+
+}
