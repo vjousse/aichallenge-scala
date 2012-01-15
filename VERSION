@@ -1,0 +1,9 @@
+This starter package zip was published on Tue Nov 29 05:52:20 UTC 2011.
+
+Last change on this starter package was:
+commit a696b536bcc30b6a3ffb031335ebf4de1ccc4b8d
+Date:   Mon Oct 31 19:39:26 2011 -0500
+
+    Adding hill support to scala starter kit.
+
+Check https://github.com/aichallenge/aichallenge/tree/epsilon/ants/dist/starter_bots/scala for new versions.
