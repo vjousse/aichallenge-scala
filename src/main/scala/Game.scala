@@ -1,3 +1,5 @@
+package antwar
+
 import scala.math.{abs,min,pow}
 
 case class GameInProgress(turn: Int = 0, parameters: GameParameters = GameParameters(), board: Board = Board()) extends Game {

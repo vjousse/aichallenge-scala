@@ -1,10 +1,12 @@
+package antwar
+
 import scala.util.Random
 
 object MyBot extends App {
   new AntsGame().run(new MyBot)
 }
 
-class MyBot extends Bot {
+class MyBot extends Bot with Loggable {
 
   def ordersFrom(game: Game): Set[Order] = {
 

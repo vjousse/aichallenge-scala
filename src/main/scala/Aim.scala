@@ -1,3 +1,5 @@
+package antwar
+
 sealed trait CardinalPoint {
   val symbol: Char
 }

@@ -1,1 +1,4 @@
-case class Tile(column: Int, row: Int)
+package antwar
+
+case class Tile(column: Int, row: Int) {
+}
