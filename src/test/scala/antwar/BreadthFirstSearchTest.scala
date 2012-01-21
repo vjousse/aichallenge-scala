@@ -5,28 +5,23 @@ import sandbox._
 
 import org.specs2.mutable._
 
-class BreadthSarchTest extends Specification {
+class BreadthSarchTest extends Specification with BfsFixtures {
 
   "My BFS algorithm" should {
     "Find the closest ant" in {
+      search.findTile(food.tile, board, isAnt) must beSome(myAnt.tile)
+    }
+  }
 
-      val myAnt = new MyAnt(Tile(7, 1))
-      val myOtherAnt = new MyAnt(Tile(9, 9))
+  "Food" should {
+    "Have 3 neighbors" in {
+      board.neighborsOf(food.tile).length must beEqualTo(3)
+    }
+  }
 
-      val food = new Food(Tile(3, 3))
-      val board = new Board(
-        10, 10,
-        myAnts = Map(myAnt.tile -> myAnt, myOtherAnt.tile -> myOtherAnt),
-        food = Map(food.tile -> food)
-        )
-
-      val search = new BreadthFirstSearch(board)
-
-      def isAnt(tile: Tile): Boolean = board.myAnts.contains(tile)
-
-      val antFound = search.findTile(food.tile, isAnt)
-
-      antFound must beSome(myAnt.tile)
+  "My ant" should {
+    "Have 4 neighbors" in {
+      board.neighborsOf(myAnt.tile).length must beEqualTo(4)
     }
   }
 
