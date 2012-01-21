@@ -26,7 +26,7 @@ class BreadthSarchTest extends Specification {
 
       val antFound = search.findTile(food.tile, isAnt)
 
-      antFound must beSome(myAnt)
+      antFound must beSome(myAnt.tile)
     }
   }
 
