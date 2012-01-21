@@ -1,5 +1,5 @@
 package antwar
 
 trait Bot {
-  def ordersFrom(gameState: Game): Set[Order]
+  def ordersFrom(gameState: GameInProgress): Set[Order]
 }

@@ -6,12 +6,12 @@ object MyBot extends App {
 
   Logger.info("New game")
 
-  new AntsGame().run(new MyBot)
+  new AntsGame(bot = new MyBot).run()
 }
 
 class MyBot extends Bot {
 
-  def ordersFrom(game: Game): Set[Order] = basicRandomExample(game)
+  def ordersFrom(game: GameInProgress): Set[Order] = basicRandomExample(game)
 
   /**
    * Should give back an order if a food is not too far
@@ -21,6 +21,7 @@ class MyBot extends Bot {
    */
   def antOrderForFood(food: Food): Option[Order] = {
     //Make it compile
+    //TODO: Find a way to have the neighbors of this Tile
     //TODO: Use breadth first search to find a close ant
     None
   }
@@ -28,7 +29,7 @@ class MyBot extends Bot {
   /**
    * Try to move each ant in the direction of a food
    */
-  def collectFood(game: Game): Set[Order] = {
+  def collectFood(game: GameInProgress): Set[Order] = {
     //For each food of the map, try to see if an ant
     //can be moved toward it
     val orders = for {
@@ -39,7 +40,7 @@ class MyBot extends Bot {
     orders.toSet
   }
 
-  def basicRandomExample(game: Game): Set[Order] = {
+  def basicRandomExample(game: GameInProgress): Set[Order] = {
 
     val directions = List(North, East, South, West)
     val ants = game.board.myAnts.values
