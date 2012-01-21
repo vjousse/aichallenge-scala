@@ -6,7 +6,7 @@ import util.matching.Regex
 
 object Parser {
 
-  def parse(source: Source, params: GameParameters = GameParameters(), knownWater: Map[Tile, Water] = Map.empty) = {
+  def parse(source: Source, params: GameParameters, knownWater: Map[Tile, Water] = Map.empty) = {
 
     val lines = source.getLines
 
@@ -31,7 +31,12 @@ object Parser {
       }
     }
 
-    parseInternal(GameInProgress(parameters = params, board = Board(water = knownWater)))
+    parseInternal(
+      GameInProgress(
+        parameters = params,
+        board = Board(rows = params.rows, cols = params.cols, water = knownWater)
+        )
+      )
   }
 
 
@@ -65,7 +70,7 @@ object Parser {
     ("loadtime (\\d+)".r, (game: GameNew, values: Seq[Int]) => game.copy(parameters = game.parameters.copy(loadTime = values(0)))) ::
     ("turntime (\\d+)".r, (game: GameNew, values: Seq[Int]) => game.copy(parameters = game.parameters.copy(turnTime = values(0)))) ::
     ("rows (\\d+)".r, (game: GameNew, values: Seq[Int]) => game.copy(parameters = game.parameters.copy(rows = values(0)))) ::
-    ("cols (\\d+)".r, (game: GameNew, values: Seq[Int]) => game.copy(parameters = game.parameters.copy(columns = values(0)))) ::
+    ("cols (\\d+)".r, (game: GameNew, values: Seq[Int]) => game.copy(parameters = game.parameters.copy(cols = values(0)))) ::
     ("turns (\\d+)".r, (game: GameNew, values: Seq[Int]) => game.copy(parameters = game.parameters.copy(turns = values(0)))) ::
     ("seed (\\d+)".r, (game: GameNew, values: Seq[Int]) => game.copy(parameters = game.parameters.copy(seed = values(0)))) ::
     ("viewradius2 (\\d+)".r, (game: GameNew, values: Seq[Int]) => game.copy(parameters = game.parameters.copy(viewRadius = values(0)))) ::
