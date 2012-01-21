@@ -11,6 +11,19 @@ case class Board(rows: Int, cols: Int,
 
   lazy val elements = myAnts ++ enemyAnts ++ water ++ food ++ corpses ++ myHills ++ enemyHills
 
+  lazy val boardTiles = {
+
+    val tiles = for{
+      r <- (0 to rows)
+      c <- (0 to rows)
+    } yield Tile(c, r)
+
+    tiles map { t => (t, Nothing(t)) } toMap
+
+  }
+
+  lazy val allTiles = boardTiles ++ elements
+
   def including[P <: Positionable](positionable: P) = positionable match {
     case friend: MyAnt    => this.copy(myAnts = this.myAnts.updated(friend.tile, friend))
     case enemy: EnemyAnt  => this.copy(enemyAnts = this.enemyAnts.updated(enemy.tile, enemy))
