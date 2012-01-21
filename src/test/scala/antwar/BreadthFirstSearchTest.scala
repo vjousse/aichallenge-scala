@@ -19,5 +19,12 @@ class BreadthSarchTest extends FunSuite {
       food = Map(food.tile -> food)
     )
 
+    val search = new BreadthFirstSearch(board)
+
+    def isAnt(tile: Tile): Boolean = board.myAnts.contains(tile)
+
+    val antFound = search.findTile(food.tile, isAnt)
+
+    assert(antFound === Some(myAnt))
   }
 }
