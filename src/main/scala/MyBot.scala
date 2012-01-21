@@ -48,7 +48,7 @@ class MyBot extends Bot {
     ants.flatMap{ant =>
       // for this ant, find the first direction which is not water, if any
       val direction = Random.shuffle(directions).find{aim =>
-        val targetTile = game.tile(aim).of(ant.tile)
+        val targetTile = game.board.tile(aim).of(ant.tile)
         !game.board.water.contains(targetTile)
       }
       // convert this (possible) direction into an order for this ant

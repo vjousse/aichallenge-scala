@@ -33,4 +33,24 @@ case class Board(rows: Int, cols: Int,
     case friend: MyHill   => this.copy(myHills = this.myHills.updated(friend.tile, friend))
     case enemy: EnemyHill => this.copy(enemyHills = this.enemyHills.updated(enemy.tile, enemy))
   }
+
+  def neighborsOf(aTile: Tile): List[Tile] = {
+    for{
+      direction <- List(North, East, South, West)
+      neighbor = tile(direction) of aTile
+      if !water.contains(neighbor)
+    } yield neighbor
+  }
+
+  def tile(aim: CardinalPoint) = new {
+    def of(tile: Tile) = {
+      aim match {
+        case North => tile.copy(row = if (tile.row == 0) rows - 1 else tile.row - 1)
+        case South => tile.copy(row = (tile.row + 1) % rows)
+        case East => tile.copy(column = (tile.column + 1) % cols)
+        case West => tile.copy(column = if (tile.column == 0) cols - 1 else tile.column - 1)
+      }
+    }
+  }
+
 }

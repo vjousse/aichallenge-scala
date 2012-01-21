@@ -39,16 +39,6 @@ case class GameInProgress(turn: Int = 0, parameters: GameParameters, board: Boar
     }
   }
 
-  def tile(aim: CardinalPoint) = new {
-    def of(tile: Tile) = {
-      aim match {
-        case North => tile.copy(row = if (tile.row == 0) parameters.rows - 1 else tile.row - 1)
-        case South => tile.copy(row = (tile.row + 1) % parameters.rows)
-        case East => tile.copy(column = (tile.column + 1) % parameters.cols)
-        case West => tile.copy(column = if (tile.column == 0) parameters.cols - 1 else tile.column - 1)
-      }
-    }
-  }
 }
 case class GameOver(turn: Int = 0, parameters: GameParameters, board: Board) extends Game {
   val gameOver = true
