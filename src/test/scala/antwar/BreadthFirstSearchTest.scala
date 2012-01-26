@@ -9,7 +9,7 @@ class BreadthSarchTest extends Specification with BfsFixtures {
 
   "My BFS algorithm" should {
     "Find the closest ant" in {
-      search.findTile(food.tile, board, isAnt) must beSome(myAnt.tile)
+      search.findTile(food.tile) must beSome(myAnt.tile)
     }
   }
 

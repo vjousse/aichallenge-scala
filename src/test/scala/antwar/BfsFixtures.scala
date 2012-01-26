@@ -17,7 +17,7 @@ trait BfsFixtures {
     water = Map(water.tile -> water)
     )
 
-  val search = new BreadthFirstSearch(board)
+  val search = new BreadthFirstSearch(board, isAnt)
 
   def isAnt(tile: Tile): Boolean = board.myAnts.contains(tile)
 
