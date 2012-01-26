@@ -14,23 +14,17 @@ case class BreadthFirstSearch(board: Board, goal: Tile => Boolean) {
 
   }
 
-  def searchQueue(queue: Queue[Tile], distance: Int, marked: Set[Tile] = Set()): Option[Tile] = queue.dequeue match {
+  def searchQueue(queue: Queue[Tile], distance: Int, marked: Set[Tile]): Option[Tile] = queue.dequeue match {
     case (tile, rest) => {
 
       val (tile, rest) = queue.dequeue
       println("Examining Tile " + tile)
 
-      goal(tile) match {
-        case true => Some(tile)
-        case _ => {
-          val neighbors = for {
-            nTile <- board.neighborsOf(tile)
-            if (!marked.contains(nTile))
-          } yield nTile
-
-          val newQueue = rest.enqueue(neighbors)
-          searchQueue(newQueue, distance + 1, marked ++ neighbors)
-        }
+      if (goal(tile)) Some(tile)
+      else {
+        val neighbors = board neighborsOf tile filterNot marked.contains
+        val newQueue = rest.enqueue(neighbors)
+        searchQueue(newQueue, distance + 1, marked ++ neighbors)
       }
 
     }
