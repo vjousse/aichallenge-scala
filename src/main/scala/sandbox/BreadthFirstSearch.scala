@@ -14,11 +14,8 @@ case class BreadthFirstSearch(board: Board, goal: Tile => Boolean) {
 
   }
 
-  def searchQueue(queue: Queue[Tile], distance: Int, marked: Set[Tile]): Option[Tile] = queue.dequeue match {
+  private def searchQueue(queue: Queue[Tile], distance: Int, marked: Set[Tile]): Option[Tile] = queue.dequeue match {
     case (tile, rest) => {
-
-      val (tile, rest) = queue.dequeue
-      println("Examining Tile " + tile)
 
       if (goal(tile)) Some(tile)
       else {
@@ -28,7 +25,6 @@ case class BreadthFirstSearch(board: Board, goal: Tile => Boolean) {
       }
 
     }
-
     case _ => None
   }
 

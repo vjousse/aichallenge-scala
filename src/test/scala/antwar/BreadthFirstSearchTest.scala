@@ -15,13 +15,13 @@ class BreadthSarchTest extends Specification with BfsFixtures {
 
   "Food" should {
     "Have 3 neighbors" in {
-      board.neighborsOf(food.tile).length must beEqualTo(3)
+      board.neighborsOf(food.tile) must have size(3)
     }
   }
 
   "My ant" should {
     "Have 4 neighbors" in {
-      board.neighborsOf(myAnt.tile).length must beEqualTo(4)
+      board.neighborsOf(myAnt.tile) must have size(4)
     }
   }
 
