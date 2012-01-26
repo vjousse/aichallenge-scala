@@ -5,23 +5,16 @@ import scala.collection.immutable._
 
 case class BreadthFirstSearch(board: Board, goal: Tile => Boolean) {
 
-  case class Node(tile: Tile, childs: List[Tile], marked: Boolean = false)
+  def findTile(startTile: Tile): Option[Tile] = searchQueue(Queue(startTile), Set(startTile))
 
-  def findTile(startTile: Tile, maxDistance: Int = 10): Option[Tile] = {
-
-    val queue = Queue(startTile)
-    searchQueue(queue, 0, Set(startTile))
-
-  }
-
-  private def searchQueue(queue: Queue[Tile], distance: Int, marked: Set[Tile]): Option[Tile] = queue.dequeue match {
+  private def searchQueue(queue: Queue[Tile], marked: Set[Tile]): Option[Tile] = queue.dequeue match {
     case (tile, rest) => {
 
       if (goal(tile)) Some(tile)
       else {
         val neighbors = board neighborsOf tile filterNot marked.contains
         val newQueue = rest.enqueue(neighbors)
-        searchQueue(newQueue, distance + 1, marked ++ neighbors)
+        searchQueue(newQueue, marked ++ neighbors)
       }
 
     }
