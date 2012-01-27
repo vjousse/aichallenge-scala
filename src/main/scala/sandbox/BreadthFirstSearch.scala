@@ -5,20 +5,37 @@ import scala.collection.immutable._
 
 case class BreadthFirstSearch(board: Board, goal: Tile => Boolean) {
 
-  def findTile(startTile: Tile): Option[Tile] = searchQueue(Queue(startTile), Set(startTile))
+  case class Node(value: Tile, children: List[Node] = Nil)
 
-  private def searchQueue(queue: Queue[Tile], marked: Set[Tile]): Option[Tile] = queue.dequeue match {
-    case (tile, rest) => {
+  /**
+   *  Build a graph for the BFS, with a deep limit to levelLimit
+   */
+  def graph(tile: Tile, marked: Set[Tile] = Set(), currentLevel: Int = 0, levelLimit: Int = 10): Node = {
 
-      if (goal(tile)) Some(tile)
+    Node(tile,
+      if (currentLevel > levelLimit)
+        Nil
       else {
         val neighbors = board neighborsOf tile filterNot marked.contains
-        val newQueue = rest.enqueue(neighbors)
-        searchQueue(newQueue, marked ++ neighbors)
-      }
+        neighbors map { n => graph(n, marked ++ neighbors, currentLevel + 1, levelLimit) }
+      })
+
+  }
+
+  private def searchGraph(queue: Queue[Node]): Option[Tile] = queue.dequeue match {
+    case (node, rest) => {
+
+      if (goal(node.value))
+        Some(node.value)
+      else
+        searchGraph(rest.enqueue(node.children))
 
     }
     case _ => None
+  }
+
+  def findTile(startTile: Tile): Option[Tile] = {
+    searchGraph(Queue(graph(startTile)))
   }
 
 }
