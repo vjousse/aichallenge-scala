@@ -6,7 +6,7 @@ import sandbox._
 trait BfsFixtures {
 
   val myAnt = new MyAnt(Tile(7, 1))
-  val myOtherAnt = new MyAnt(Tile(9, 9))
+  val myOtherAnt = new MyAnt(Tile(9, 0))
   //Closest ant using Torus board
   val myCloserAnt = new MyAnt(Tile(9, 3))
 
@@ -35,8 +35,9 @@ trait BfsFixtures {
     )
 
   val search = new BreadthFirstSearch(board, isAnt)
-  val searchTorus = new BreadthFirstSearch(torusBoard, isAnt)
+  val searchTorus = new BreadthFirstSearch(torusBoard, isAntTorus)
 
   def isAnt(tile: Tile): Boolean = board.myAnts.contains(tile)
+  def isAntTorus(tile: Tile): Boolean = torusBoard.myAnts.contains(tile)
 
 }
