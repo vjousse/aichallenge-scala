@@ -42,6 +42,33 @@ case class Board(rows: Int, cols: Int,
     } yield neighbor
   }
 
+  def directionFrom(one: Tile) = new {
+    def to(other: Tile): Set[CardinalPoint] = {
+      val ns: Set[CardinalPoint] = if (one.row < other.row) {
+        if (other.row - one.row >= rows / 2) Set(North) else Set(South)
+      } else if (one.row > other.row) {
+        if (one.row - other.row >= rows / 2) Set(South) else Set(North)
+      } else Set()
+
+      val ew: Set[CardinalPoint] = if (one.column < other.column) {
+        if (other.column - one.column >= cols / 2) Set(West) else Set(East)
+      } else if (one.column > other.column) {
+        if (one.column - other.column >= cols / 2) Set(East) else Set(West)
+      } else Set()
+
+      ns ++ ew
+    }
+
+    def toNeighbor(other: Tile): CardinalPoint = {
+      if((one.column + 1) % cols == other.column) East
+      else if((one.row + 1) % cols == other.row) South
+      else if((if(one.column == 0) (cols-1) else (one.column-1)) == other.column) West
+      else North
+    }
+  }
+
+
+
   def tile(aim: CardinalPoint) = new {
     def of(tile: Tile) = {
       aim match {

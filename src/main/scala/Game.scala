@@ -21,24 +21,6 @@ case class GameInProgress(turn: Int = 0, parameters: GameParameters, board: Boar
     }
   }
 
-  def directionFrom(one: Tile) = new {
-    def to(other: Tile): Set[CardinalPoint] = {
-      val ns: Set[CardinalPoint] = if (one.row < other.row) {
-        if (other.row - one.row >= parameters.rows / 2) Set(North) else Set(South)
-      } else if (one.row > other.row) {
-        if (one.row - other.row >= parameters.rows / 2) Set(South) else Set(North)
-      } else Set()
-
-      val ew: Set[CardinalPoint] = if (one.column < other.column) {
-        if (other.column - one.column >= parameters.cols / 2) Set(West) else Set(East)
-      } else if (one.column > other.column) {
-        if (one.column - other.column >= parameters.cols / 2) Set(East) else Set(West)
-      } else Set()
-
-      ns ++ ew
-    }
-  }
-
 }
 case class GameOver(turn: Int = 0, parameters: GameParameters, board: Board) extends Game {
   val gameOver = true
