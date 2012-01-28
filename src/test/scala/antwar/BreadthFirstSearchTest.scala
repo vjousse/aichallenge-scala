@@ -13,7 +13,6 @@ class BreadthSarchTest extends Specification with BfsFixtures {
     }
 
     "Find the closest ant using the torus particularity of the board" in {
-      println(searchTorus.board)
       searchTorus.findTile(food.tile) must beSome(myCloserAnt.tile)
     }
   }
