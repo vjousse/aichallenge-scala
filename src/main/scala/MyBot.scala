@@ -1,4 +1,5 @@
 package antwar
+import sandbox.BreadthFirstSearch
 
 import scala.util.Random
 
@@ -11,7 +12,7 @@ object MyBot extends App {
 
 class MyBot extends Bot {
 
-  def ordersFrom(game: GameInProgress): Set[Order] = basicRandomExample(game)
+  def ordersFrom(game: GameInProgress): Set[Order] = collectFood(game)
 
   /**
    * Should give back an order if a food is not too far
@@ -19,11 +20,19 @@ class MyBot extends Bot {
    *
    * TODO: Put it somewhere else
    */
-  def antOrderForFood(food: Food): Option[Order] = {
+  def antOrderForFood(food: Food, game: GameInProgress): Option[Order] = {
     //Make it compile
     //TODO: Find a way to have the neighbors of this Tile
     //TODO: Use breadth first search to find a close ant
-    None
+
+    def isAnt(tile: Tile): Boolean = game.board.myAnts.contains(tile)
+
+    val search = new BreadthFirstSearch(game.board, isAnt)
+    search.findTileAndDirection(food.tile) match {
+      case Some((targetTile, directionTile)) => Some(Order(targetTile, game.board directionFrom targetTile toNeighbor directionTile))
+      case None => None
+    }
+
   }
 
   /**
@@ -34,7 +43,7 @@ class MyBot extends Bot {
     //can be moved toward it
     val orders = for {
       (tile, food) <- game.board.food
-      order <- antOrderForFood(food)
+      order <- antOrderForFood(food, game)
     } yield order
 
     orders.toSet
