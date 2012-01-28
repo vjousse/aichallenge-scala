@@ -21,7 +21,7 @@ case class BreadthFirstSearch(board: Board, goal: Tile => Boolean) {
         Nil
       else {
         val neighbors = board neighborsOf tile filterNot marked.contains
-        neighbors map { n => buildGraph(n, marked ++ neighbors, currentLevel + 1, levelLimit) }
+        neighbors map { n => buildGraph(n, marked ++ neighbors + tile, currentLevel + 1, levelLimit) }
       })
 
   private def searchGraph(queue: Queue[Node]): Option[Tile] = catching(classOf[NoSuchElementException]) opt queue.dequeue match {
