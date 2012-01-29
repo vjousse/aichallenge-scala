@@ -1,4 +1,5 @@
 package antwar
+import scala.math.{abs,min,pow}
 
 case class Board(rows: Int, cols: Int,
     myAnts: Map[Tile, MyAnt] = Map(),
@@ -41,6 +42,17 @@ case class Board(rows: Int, cols: Int,
       if !water.contains(neighbor)
     } yield neighbor
   }
+
+  def distanceFrom(one: Tile) = new {
+    def to(another: Tile) = {
+      val dRow = abs(one.row - another.row)
+      val dCol = abs(one.column - another.column)
+      pow(min(dRow, rows - dRow), 2) + pow(min(dCol, cols - dCol), 2)
+    }
+  }
+
+
+  def closestHillFrom(one: Tile): Tile = myHills.values.minBy( h => distanceFrom(one) to (h.tile) ).tile
 
   def directionFrom(one: Tile) = new {
     def to(other: Tile): Set[CardinalPoint] = {
